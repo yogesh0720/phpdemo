@@ -1,0 +1,20 @@
+{
+    "name": "yogeshnayi/phpdemo",
+    "description": "sample phpdemo",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yogesh Nayi",
+            "email": "yogeshnayi7@gmail.com"
+        }
+    ],
+    "require": {
+        "fzaninotto/faker": "^1.5",
+        "vlucas/phpdotenv": "^5.3",
+        "guzzlehttp/psr7": "^1.4"
+    }
+}
