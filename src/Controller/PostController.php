@@ -45,8 +45,8 @@ class PostController
             default:
                 $response = $this->notFoundResponse();
                 break;
-        }
-        header($response['status_code_header']);
+        }        
+
         if ($response['body']) {
             echo $response['body'];
         }
@@ -91,8 +91,7 @@ class PostController
             return $this->notFoundResponse();
         }
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        var_dump($input);
-        die;
+       
         if (!$this->validatePost($input)) {
             return $this->unprocessableEntityResponse();
         }
