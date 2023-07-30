@@ -11,14 +11,20 @@ class PostController
     private $db;
     private $requestMethod;
     private $postId;
+    private $params;
+    private $limit;
+    private $offset;
 
     private $postModel;
 
-    public function __construct($db, $requestMethod, $postId)
+    public function __construct($db, $requestMethod, $postId, $params=[])
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
         $this->postId = $postId;
+        $this->params = $params;
+        $this->limit = isset($this->params['limit']) && !empty($this->params['limit']) ? $this->params['limit'] : 100;
+        $this->offset = isset($this->params['offset']) && !empty($this->params['offset']) ? $this->params['offset'] : 0;
 
         $this->postModel = new PostModel($db);
     }
@@ -30,7 +36,7 @@ class PostController
                 if ($this->postId) {
                     $response = $this->getPost($this->postId);
                 } else {
-                    $response = $this->getAllPosts();
+                    $response = $this->getAllPosts($this->limit, $this->offset);
                 };
                 break;
             case 'POST':
@@ -52,9 +58,9 @@ class PostController
         }
     }
 
-    private function getAllPosts()
+    private function getAllPosts($limit, $offset)
     {
-        $result = $this->postModel->findAll();
+        $result = $this->postModel->findAll($limit, $offset);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
         return $response;

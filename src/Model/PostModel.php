@@ -12,13 +12,14 @@ class PostModel
         $this->db = $db;
     }
 
-    public function findAll()
+    public function findAll($limit = 100, $offset = 0)
     {
         $statement = "
             SELECT
                 id, title, body, author, created_at
             FROM
-                post ORDER BY 1 DESC;
+                post ORDER BY 1 DESC
+                LIMIT {$limit} OFFSET {$offset};
         ";
 
         try {
